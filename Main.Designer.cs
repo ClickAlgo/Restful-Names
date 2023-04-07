@@ -30,7 +30,7 @@
         {
             this.BtnSubmit = new System.Windows.Forms.Button();
             this.TxtName = new System.Windows.Forms.TextBox();
-            this.TxtResult = new System.Windows.Forms.TextBox();
+            this.txtResult = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // BtnSubmit
@@ -52,23 +52,25 @@
             this.TxtName.Size = new System.Drawing.Size(360, 39);
             this.TxtName.TabIndex = 1;
             // 
-            // TxtResult
+            // txtResult
             // 
-            this.TxtResult.Location = new System.Drawing.Point(30, 178);
-            this.TxtResult.Multiline = true;
-            this.TxtResult.Name = "TxtResult";
-            this.TxtResult.Size = new System.Drawing.Size(734, 186);
-            this.TxtResult.TabIndex = 2;
+            this.txtResult.Location = new System.Drawing.Point(30, 178);
+            this.txtResult.Multiline = true;
+            this.txtResult.Name = "txtResult";
+            this.txtResult.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtResult.Size = new System.Drawing.Size(862, 478);
+            this.txtResult.TabIndex = 2;
             // 
-            // Form1
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(788, 394);
-            this.Controls.Add(this.TxtResult);
+            this.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ClientSize = new System.Drawing.Size(904, 668);
+            this.Controls.Add(this.txtResult);
             this.Controls.Add(this.TxtName);
             this.Controls.Add(this.BtnSubmit);
-            this.Name = "Form1";
+            this.Name = "Main";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -79,6 +81,6 @@
 
         private System.Windows.Forms.Button BtnSubmit;
         private System.Windows.Forms.TextBox TxtName;
-        private System.Windows.Forms.TextBox TxtResult;
+        private System.Windows.Forms.TextBox txtResult;
     }
 }

@@ -18,16 +18,12 @@ namespace Restful_Names
 
         private void BtnSubmit_Click(object sender, EventArgs e)
         {
-            var validator = new NameValidator();
-            if (validator.Ping())
+            if (Ping())
             {
-                validator.Check();
+                Check();
             }
         }
-    }
 
-    public class NameValidator
-    {
         public bool Ping()
         {
             string URL = "https://api.nameapi.org/rest/v5.3/system/ping";
@@ -44,7 +40,7 @@ namespace Restful_Names
             if (response.IsSuccessStatusCode)
             {
                 // Parse the response body.
-               var result = response.Content.ReadAsStringAsync().Result;
+                var result = response.Content.ReadAsStringAsync().Result;
 
                 if (result == "pong")
                     return true;
@@ -57,7 +53,7 @@ namespace Restful_Names
             return false;
         }
 
-        public async Task Check()
+        public void Check()
         {
             HttpClient client = new HttpClient();
 
@@ -70,38 +66,55 @@ namespace Restful_Names
             client.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var tmp = @" {""context"" : {
-                    ""priority"" : ""REALTIME"",
-                     ""properties"" : [ ]
-                   },
+            var tmp = @" {
                   ""inputPerson"" : {
                                     ""type"" : ""NaturalInputPerson"",
                     ""personName"" : {
                                         ""nameFields"" : [ {
-                                            ""string"" : ""fred"",
-                        ""fieldType"" : ""GIVENNAME""
-                                        }, {
-                                            ""string"" : ""mm"",
-                        ""fieldType"" : ""SURNAME""
-                                     } ]
+                                            ""string"" : ""fred blogs"",
+                        ""fieldType"" : ""FULLNAME""
+                                        }]
                     },
                     ""gender"" : ""UNKNOWN""
                   }
             }";
 
-            //string person = "{ ""context"" : {""priority"" : ""REALTIME"", 'properties' : [ ]},'inputPerson' : {'type' : 'NaturalInputPerson','personName' : {'nameFields' : [ {'string' : 'Petra','fieldType' : 'GIVENNAME'}, { 'string' : 'Meyer', 'fieldType' : 'SURNAME'} ]},'gender' : 'UNKNOWN'} }    ";
+            var payload = new Root();
+
+            var inputPerson = new InputPerson();
+            inputPerson.type = "NaturalInputPerson";
+            inputPerson.gender = "UNKNOWN";
+
+            var person = new PersonName();
+            var fields = new List<NameField>();
+            var field = new NameField();
+            field.@string = TxtName.Text;
+            field.fieldType = "FULLNAME";
+
+            fields.Add(field);
+
+            person.nameFields = fields;
+
+            inputPerson.personName = person;
+
+            payload.inputPerson = inputPerson;
+           
+
+            // Serialize our concrete class into a JSON String
+            var stringPayload = JsonConvert.SerializeObject(payload);
 
             // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
-            var httpContent = new StringContent(tmp, Encoding.UTF8, "application/json");
+            var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
 
             // List data response.
-            var response = await client.PostAsync(urlParameters, httpContent);  // Blocking call! Program will wait here until a response is received or a timeout occurs.
-
+            var response = client.PostAsync(urlParameters, httpContent);  // Blocking call! Program will wait here until a response is received or a timeout occurs.
+            response.Wait();
 
             // If the response contains content we want to read it!
-            if (response.Content != null)
+            if (response.IsCompletedSuccessfully)
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
+                var responseContent = response.Result.Content.ReadAsStringAsync();
+                txtResult.Text = responseContent.Result;
             }
 
             // Dispose once all HttpClient calls are complete. This is not necessary if the containing object will be disposed of; for example in this case the HttpClient instance will be disposed automatically when the application terminates so the following call is superfluous.

@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 namespace Restful_Names
 {
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+    public class BestMatch
+    {
+        public ParsedPerson parsedPerson { get; set; }
+        public List<object> parserDisputes { get; set; }
+        public double likeliness { get; set; }
+        public double confidence { get; set; }
+    }
+
     public class Gender
     {
         public string gender { get; set; }
@@ -35,6 +43,12 @@ namespace Restful_Names
         public string addressingGivenName { get; set; }
         public string addressingSurname { get; set; }
         public OutputPersonName outputPersonName { get; set; }
+    }
+
+    public class Roots
+    {
+        public List<Match> matches { get; set; }
+        public BestMatch bestMatch { get; set; }
     }
 
     public class Term
