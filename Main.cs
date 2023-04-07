@@ -66,21 +66,7 @@ namespace Restful_Names
             client.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var tmp = @" {
-                  ""inputPerson"" : {
-                                    ""type"" : ""NaturalInputPerson"",
-                    ""personName"" : {
-                                        ""nameFields"" : [ {
-                                            ""string"" : ""fred blogs"",
-                        ""fieldType"" : ""FULLNAME""
-                                        }]
-                    },
-                    ""gender"" : ""UNKNOWN""
-                  }
-            }";
-
             var payload = new Root();
-
             var inputPerson = new InputPerson();
             inputPerson.type = "NaturalInputPerson";
             inputPerson.gender = "UNKNOWN";
@@ -90,13 +76,10 @@ namespace Restful_Names
             var field = new NameField();
             field.@string = TxtName.Text;
             field.fieldType = "FULLNAME";
-
             fields.Add(field);
 
             person.nameFields = fields;
-
             inputPerson.personName = person;
-
             payload.inputPerson = inputPerson;
            
 
@@ -115,6 +98,22 @@ namespace Restful_Names
             {
                 var responseContent = response.Result.Content.ReadAsStringAsync();
                 txtResult.Text = responseContent.Result;
+
+                // Parse the response body.
+                var dataObjects = response.Result.Content.ReadAsAsync<OutPut>().Result;  //Make sure to add a reference to System.Net.Http.Formatting.dll
+                
+                if(dataObjects.bestMatch == null || dataObjects.bestMatch.confidence < .5)
+                {
+                    lblResult.Text = "FAKE";
+                }
+                else
+                {
+                    lblResult.Text = "VALID";
+                }
+            }
+            else
+            {
+
             }
 
             // Dispose once all HttpClient calls are complete. This is not necessary if the containing object will be disposed of; for example in this case the HttpClient instance will be disposed automatically when the application terminates so the following call is superfluous.

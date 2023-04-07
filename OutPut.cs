@@ -45,7 +45,7 @@ namespace Restful_Names
         public OutputPersonName outputPersonName { get; set; }
     }
 
-    public class Roots
+    public class OutPut
     {
         public List<Match> matches { get; set; }
         public BestMatch bestMatch { get; set; }

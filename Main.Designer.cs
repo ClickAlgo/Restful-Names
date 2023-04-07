@@ -31,6 +31,7 @@
             this.BtnSubmit = new System.Windows.Forms.Button();
             this.TxtName = new System.Windows.Forms.TextBox();
             this.txtResult = new System.Windows.Forms.TextBox();
+            this.lblResult = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BtnSubmit
@@ -58,15 +59,26 @@
             this.txtResult.Multiline = true;
             this.txtResult.Name = "txtResult";
             this.txtResult.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtResult.Size = new System.Drawing.Size(862, 478);
+            this.txtResult.Size = new System.Drawing.Size(862, 262);
             this.txtResult.TabIndex = 2;
+            // 
+            // lblResult
+            // 
+            this.lblResult.AutoSize = true;
+            this.lblResult.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblResult.Location = new System.Drawing.Point(30, 458);
+            this.lblResult.Name = "lblResult";
+            this.lblResult.Size = new System.Drawing.Size(186, 65);
+            this.lblResult.TabIndex = 3;
+            this.lblResult.Text = "Ready...";
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(904, 668);
+            this.ClientSize = new System.Drawing.Size(904, 546);
+            this.Controls.Add(this.lblResult);
             this.Controls.Add(this.txtResult);
             this.Controls.Add(this.TxtName);
             this.Controls.Add(this.BtnSubmit);
@@ -82,5 +94,6 @@
         private System.Windows.Forms.Button BtnSubmit;
         private System.Windows.Forms.TextBox TxtName;
         private System.Windows.Forms.TextBox txtResult;
+        private System.Windows.Forms.Label lblResult;
     }
 }
